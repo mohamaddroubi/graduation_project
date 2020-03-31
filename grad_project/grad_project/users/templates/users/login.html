@@ -1,0 +1,39 @@
+{% extends "recommend/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+<style>
+    body {
+      /* The image used */
+      background-image: url("https://ksassets.timeincuk.net/wp/uploads/sites/46/2017/06/clothes.jpg");
+    
+      min-height: 590px;
+    
+    }
+    .content-section {
+        background-color: white;
+        background-color: rgba(255, 255, 255, 0.521);
+
+    }      
+</style>
+{% endblock %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Log in</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class = "text-muted">
+                Need an Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+            </small>
+
+        </div>
+    </div>
+{% endblock content %}

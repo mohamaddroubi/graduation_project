@@ -1,0 +1,228 @@
+{% extends "recommend/base.html" %}
+{% load crispy_forms_tags %}
+{% block head %}
+<style>
+  * {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+/*body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}*/
+
+/* Style tab links */
+.tablink {
+    background-color: #303036;
+    color: palevioletred;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+    
+}
+
+.tablink:hover {
+    background-color: #5f788a;
+    color: black;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+    background-color:inherit;
+    color: black;
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+    text-align: center;
+    border-radius: 3px;
+    border: 1px solid #5f788a;
+}
+.tabcontent h3{
+    font-size: 32px;
+}
+.findtab {
+    font-size: 24px;
+}
+.findtab button {
+    background-color:#40a8cf;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    border-radius: 3px;
+    
+    margin: 10px;
+}
+
+.findtab button:hover {
+    background-color: royalblue;
+    color:white;
+    cursor: pointer;
+}
+.findtab select{
+    border-radius: 3px;
+    margin: 10px;
+}
+</style>
+{% endblock head %}
+{% block content %}
+
+  <div class="user" >
+    <button class="tablink" style="border-top-left-radius: 3px;" onclick="openPage('ItemsTab', this, 'white', '1px solid #5f788a', 'black', 'underline')" id="Items">Items</button>
+    <button class="tablink" onclick="openPage('RecommendedTab', this, 'white', '1px solid #5f788a', 'black', 'underline')" id="Recommended">Recommended for you</button>
+    <button class="tablink" onclick="openPage('OffersTab', this, 'white', '1px solid #5f788a', 'black', 'underline')" id="Offers">Offers</button>
+    <button class="tablink"  style="border-top-right-radius: 3px;" onclick="openPage('FindTab', this, 'white', '1px solid #5f788a', 'black', 'underline')" id="Find">Find</button>
+    
+
+    <div id="ItemsTab" class="tabcontent">
+      <h3>Items</h3>
+      <p>items here</p>
+      <div class="card-columns">
+      {% for item in items %}
+        
+        <div class="card" >
+          <img class="card-img-top" src="{{ item.Picture }}" alt="image of {{ item.title }}" >
+          <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">from {{ item.Brand }}</h6>
+            <p class="card-text">{{ item.Description }}</p>
+            <a href="{% url 'item_detail' itemId='hi' slug='bye' %}" class="btn btn-primary stretched-link">More Details</a>
+          </div>
+        </div>
+        
+      {% endfor %}
+    </div>
+<!-- Pagination here -->
+  
+    <nav aria-label="Items navigation">
+      <div class="pagination">
+        <span class="step-links">
+        {% if page_items.has_previous %}
+          <a class="btn btn-outline-info mb-4" href="?page=1">&laquo; First</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_items.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in page_items.paginator.page_range %}
+          {% if page_items.number == num %}
+            <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% elif num > page_items.number|add:'-3' and num < page_items.number|add:'3' %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_items.has_next %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_items.next_page_number }}">Next</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_items.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+        </span>
+      </div>
+    </nav>
+    <span class="current">
+          Page {{ page_items.number }} of {{ page_items.paginator.num_pages }}.
+        </span>
+  
+    </div>
+
+    <div id="RecommendedTab" class="tabcontent">
+      <h3>Recommended for you: </h3>
+      
+      <div class="card-columns">
+      {% for i in recomms %}
+        
+        <div class="card" >
+          <img class="card-img-top" src="{{ item.values.Picture }}" alt="image of {{ item.title }}" >
+          <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">from {{ item.values.Brand }}</h6>
+            <p class="card-text">{{ item.values.Description }}</p>
+            <a href="{% url 'item_detail' '1' 'hi' %}" class="btn btn-primary">More Details</a>
+          </div>
+        </div>
+      
+      {% endfor %}
+    </div>
+
+<!-- Pagination here -->
+  
+    <nav aria-label="Recommended items navigation">
+      <div class="pagination">
+        <span class="step-links">
+        {% if page_recomms.has_previous %}
+          <a class="btn btn-outline-info mb-4" href="?page=1">&laquo; First</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_recomms.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in page_recomms.paginator.page_range %}
+          {% if page_recomms.number == num %}
+            <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% elif num > page_recomms.number|add:'-3' and num < page_recomms.number|add:'3' %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_recomms.has_next %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_recomms.next_page_number }}">Next</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_recomms.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+        </span>
+      </div>
+    </nav>
+    <span class="current">
+      Page {{ page_recomms.number }} of {{ page_recomms.paginator.num_pages }}.
+    </span>
+<!-- pagination ends here -->
+    </div>
+
+    <div id="OffersTab" class="tabcontent">
+      <h3>Offers</h3>
+      <div>
+          offer images here
+          <img>
+          <img>
+      </div>
+    </div>
+
+    <div id="FindTab" class="tabcontent">
+      <h3 style="margin-bottom: 30px;">Find Items</h3>
+        <form action="{% url 'search_results' %}" class=findtab method="GET">
+            {{ search_form|crispy }}
+            <button type="submit"> Go! </button>
+        </form>
+        <p style="margin-top: 50px;"><a href="#">Gift? </a></p>
+    </div>
+    </div>
+{% endblock content %}
+{% block script %}
+  <script type="text/javascript">
+    function openPage(pageName,elmnt,color, border, fontcolor, text,) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+        tablinks[i].style.border = "";
+        tablinks[i].style.color = "palevioletred";
+        tablinks[i].style.textDecoration = "none";
+      }
+      document.getElementById(pageName).style.display = "block";
+      elmnt.style.backgroundColor = color;
+      elmnt.style.border = border;
+      elmnt.style.color = fontcolor;
+      elmnt.style.textDecoration = text;
+    }
+        
+        // Get the element with id="defaultOpen" and click on it
+        function defaultOpen(defaultOpen){
+          document.getElementById(defaultOpen).click();
+        }
+        defaultOpen('{{default}}');
+        //document.getElementById("defaultOpen").click();
+  </script>
+{% endblock script %}

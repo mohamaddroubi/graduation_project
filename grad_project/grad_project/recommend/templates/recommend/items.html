@@ -1,0 +1,82 @@
+{% extends "recommend/base.html" %}
+{% block content %}
+<div class="content-section">
+  {% if brand %}
+
+  <h1 class="display-4 mb-5">Items from {{ brand|title }} </h1>
+    {% if request.user.is_authenticated %}
+    <form action="{% url 'brand_rate' brand %}" method="POST" class="mb-6">
+      {% csrf_token %}
+      <fieldset>
+        <span class="form-check form-check-inline">
+
+          <input class="form-check-input mr-2 ml-2" type="radio" id="id_rating_1" name="rating" value="1" />
+          <label class="form-check-label" for="id_rating_1">Very Bad</label>
+
+          <input class="form-check-input mr-2 ml-2" type="radio" id="id_rating_2" name="rating" value="2" />
+          <label class="form-check-label" for="id_rating_2">Bad</label>
+
+          <input class="form-check-input mr-2 ml-2" type="radio" id="id_rating_3" name="rating" value="3" />
+          <label class="form-check-label" for="id_rating_3">Moderate</label>
+
+           <input class="form-check-input mr-2 ml-2" type="radio" id="id_rating_4" name="rating" value="4" />
+          <label class="form-check-label" for="id_rating_4">Good</label>
+
+          <input class="form-check-input mr-2 ml-2" type="radio" id="id_rating_5" name="rating" value="5" />
+          <label class="form-check-label" for="id_rating_5">Very Good</label>
+
+        </span>
+        <button class="btn btn-primary ml-5" type="submit">Rate Brand</button>
+      </fieldset>            
+    </form>
+    {% endif %}
+  {% else %}
+  <h1 class="display-4 mb-5">Our list of Items</h1>
+  {% endif %}
+      <div class="card-columns">
+      {% for item in page_items %}
+        <div class="card" >
+          <img class="card-img-top" src="{{ item.Picture }}" alt="image of {{ item.title }}" >
+          <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">from {{ item.Brand }}</h6>
+            <p class="card-text">{{ item.Description }}</p>
+            <a href="{% url 'item_detail' item.itemId item.slug 'none' %}" class="btn btn-primary stretched-link">More Details</a>
+          </div>
+        </div>
+        
+      {% endfor %}
+    </div>
+  
+<!-- Pagination here -->
+  
+    <nav aria-label="Items navigation">
+      <div class="pagination">
+        <span class="step-links">
+        {% if page_items.has_previous %}
+          <a class="btn btn-outline-info mb-4" href="?page=1">&laquo; First</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_items.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in page_items.paginator.page_range %}
+          {% if page_items.number == num %}
+            <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% elif num > page_items.number|add:'-3' and num < page_items.number|add:'3' %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_items.has_next %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_items.next_page_number }}">Next</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_items.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+        </span>
+      </div>
+    </nav>
+    <span class="current">
+          Page {{ page_items.number }} of {{ page_items.paginator.num_pages }}.
+        </span>
+  
+    </div>
+ 
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends "recommend/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="content-section">
+    
+      <h3 style="margin-bottom: 30px;">Find Items</h3>
+        <form action="{% url 'search_results' %}" class=findtab method="GET">
+            {{ search_form|crispy }}
+            <button type="submit"> Go! </button>
+        </form>
+        <p style="margin-top: 50px;"><a href="#">Gift? </a></p>
+    
+  </div>
+{% endblock content %}

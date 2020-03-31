@@ -1,0 +1,108 @@
+{% extends "recommend/base.html" %}
+{% load crispy_forms_tags %}
+{% block head %}
+
+{% endblock head %}
+{% block content %}
+    <div class="content-section">
+      <img src="{{ item.Picture }}" class="img-fluid" alt>
+      <p class="text-center h6" style="margin: 10px">{{ all_users_interested }} user{{ all_users_interested|pluralize }} interested in this item</p>
+      {% if rating_stars > 0 %}
+        <p class="text-center h6" style="margin: 10px">Item rating: {{ rating_stars }}/5</p>
+      {% endif %}
+      <dl class="row">
+        
+        <dt class="col-sm-3">Title</dt>
+        <dd class="col-sm-9">{{ title }}</dd>
+
+        <dt class="col-sm-3">Brand</dt>
+        <dd class="col-sm-9">{{ item.Brand }}</dd>
+
+        <dt class="col-sm-3">Description</dt>
+        <dd class="col-sm-9">{{ item.Description }}</dd>
+
+        <dt class="col-sm-3 text-truncate">Gender</dt>
+        <dd class="col-sm-9">{{ item.Gender }}</dd>
+
+        <dt class="col-sm-3">Further Details</dt>
+        <dd class="col-sm-9">
+          <dl class="row">
+            <dt class="col-sm-4">Price</dt>
+            <dd class="col-sm-8">{{ item.Price }}</dd>
+            <dt class="col-sm-4">Color</dt>
+            <dd class="col-sm-8">{{ item.Color }}</dd>
+            <dt class="col-sm-4">Style</dt>
+            <dd class="col-sm-8">
+              <p>Category: {{ item.Category }}</p>
+              <p>Type: {{ item.Type }}</p>
+              <p>Style: {{ item.Style }}</p>
+            </dd>
+            <dt class="col-sm-4">Neck Line</dt>
+            <dd class="col-sm-8">{{ item.NeckLine }}</dd>
+            <dt class="col-sm-4">Sleeve </dt>
+            <dd class="col-sm-8">{{ item.SleeveLength }}</dd>
+            <dt class="col-sm-4">Waist</dt>
+            <dd class="col-sm-8">{{ item.WaistSize }}</dd>
+          </dl>
+        </dd>
+        <dt class="col-sm-3 text-truncate">Ocassion</dt>
+        <dd class="col-sm-9">{{ item.Ocassion }}</dd>
+        <dt class="col-sm-3 text-truncate">Website</dt>
+        <dd class="col-sm-9"><a href="{{item.Website}}">Website link</a></dd>
+      </dl>
+      
+      <!-- FORM HERE -->
+      {% if request.user.is_authenticated %}
+      {% if recommId == "none" %}
+          <form action="{% url 'interested' slug recommId %}" method="POST">
+            {% csrf_token %}
+            {% if is_interested %}
+              <button type="submit" name="item_id" value="{{ item.itemId }}" class="btn btn-danger">Not Interested</button>
+            {% else %}
+              <button type="submit" name="item_id" value="{{ item.itemId }}" class="btn btn-primary">Interested</button>
+            {% endif %}
+
+          </form>
+      {% else %}
+      <form action="{% url 'interested' slug recommId %}" method="POST">
+            {% csrf_token %}
+            {% if is_interested %}
+              <button type="submit" name="item_id" value="{{ item.itemId }}" class="btn btn-danger">Not Interested</button>
+            {% else %}
+              <button type="submit" name="item_id" value="{{ item.itemId }}" class="btn btn-primary">Interested</button>
+            {% endif %}
+
+          </form>
+      {% endif %}
+          <form action="{% url 'rate' item.itemId slug recommId %}" method="POST">
+            {% csrf_token %}
+            <fieldset>
+              <span class="form-check form-check-inline">
+
+                <input class="form-check-input ml-2 mr-2" type="radio" id="id_rating_1" name="rating" value="1" />
+                <label class="form-check-label" for="id_rating_1">Very Bad</label>
+
+                <input class="form-check-input ml-2 mr-2" type="radio" id="id_rating_2" name="rating" value="2" />
+                <label class="form-check-label" for="id_rating_2">Bad</label>
+
+                <input class="form-check-input ml-2 mr-2" type="radio" id="id_rating_3" name="rating" value="3" />
+                <label class="form-check-label" for="id_rating_3">Moderate</label>
+
+                <input class="form-check-input ml-2 mr-2" type="radio" id="id_rating_4" name="rating" value="4" />
+                <label class="form-check-label" for="id_rating_4">Good</label>
+
+                <input class="form-check-input ml-2 mr-2" type="radio" id="id_rating_5" name="rating" value="5" />
+                <label class="form-check-label" for="id_rating_5">Very Good</label>
+
+              </span>
+              <button class="btn btn-primary ml-5" type="submit">Rate Item</button>
+            </fieldset>            
+          </form>
+        
+        {% endif %}
+
+    </div>
+{% endblock content %}
+{% block script %}
+ 
+{% endblock script %}

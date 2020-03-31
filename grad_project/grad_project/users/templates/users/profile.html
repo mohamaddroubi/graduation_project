@@ -1,0 +1,60 @@
+{% extends "recommend/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+          <p class="text-secondary">{{ user.profile.user_style }}</p>
+        </div>
+        </div>
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">your items of interest</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <td><a href="{% url 'item_detail' item.itemId item.slug 'none' %}">{{ item.title }}</a></td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td>No items yet</td>
+    </tr>
+    <tr>
+      <td><a href="{% url 'items' %}">Browse Items</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<div class="col-md-auto">
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">your favorite brands</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for brand in brands %}
+    <tr>
+      <td>{{ brand }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+</div> 
+  <a class="btn btn-info" href="{% url 'update_profile' %}" role="button">Update Profile</a> 
+</div>
+{% endblock content %}
+
+
