@@ -53,27 +53,15 @@
       
       <!-- FORM HERE -->
       {% if request.user.is_authenticated %}
-      {% if recommId == "none" %}
           <form action="{% url 'interested' slug recommId %}" method="POST">
             {% csrf_token %}
             {% if is_interested %}
-              <button type="submit" name="item_id" value="{{ item.itemId }}" class="btn btn-danger">Not Interested</button>
+              <button type="submit" name="item_id" value="{{ itemId }}" class="btn btn-danger">Not Interested</button>
             {% else %}
-              <button type="submit" name="item_id" value="{{ item.itemId }}" class="btn btn-primary">Interested</button>
+              <button type="submit" name="item_id" value="{{ itemId }}" class="btn btn-primary">Interested</button>
             {% endif %}
-
           </form>
-      {% else %}
-      <form action="{% url 'interested' slug recommId %}" method="POST">
-            {% csrf_token %}
-            {% if is_interested %}
-              <button type="submit" name="item_id" value="{{ item.itemId }}" class="btn btn-danger">Not Interested</button>
-            {% else %}
-              <button type="submit" name="item_id" value="{{ item.itemId }}" class="btn btn-primary">Interested</button>
-            {% endif %}
-
-          </form>
-      {% endif %}
+      
           <form action="{% url 'rate' item.itemId slug recommId %}" method="POST">
             {% csrf_token %}
             <fieldset>

@@ -169,7 +169,7 @@ def about(request):
 
 
 @login_required
-def item_detail(request, itemId, slug, recommId="none"):
+def item_detail(request, itemId, slug, recommId):
 	#item = request.item
 	#item = get_object_or_404(Item, id=id, slug=slug)
 	user_id = str(User.objects.filter(username=request.user.username).first().id)
@@ -186,22 +186,14 @@ def item_detail(request, itemId, slug, recommId="none"):
 		req = AddDetailView(user_id, itemId)
 		req.timeout = 10000
 		client.send(req)
-	#title=item.title
-	#num = Item.objects.filter(id=request.user.id)
-	req = ListUserPurchases(user_id)
-	req.timeout = 10000
-	result = client.send(req)
-
-	#items = request.user.interested.filter(id=item.id)
+	
 	is_interested = False
-	#if items.exists():
-	for item in result:
-		if itemId == item['itemId']:
-			is_interested = True
-			break
+	user_purchases = client.send(ListUserPurchases(user_id))
 
-	req = ListItemPurchases(itemId)
-	#req.timeout = 10000
+	for i in user_purchases:
+		if i['itemId'] == itemId:
+			is_interested = True
+	
 
 	item_ratings = client.send(ListItemRatings(itemId))
 	total_item_rating = 0
@@ -215,16 +207,15 @@ def item_detail(request, itemId, slug, recommId="none"):
 		rating_stars = 0
 
 	context = {
-		'item': item,
-		'is_interested': is_interested,
-		#'all_users_interested': item.all_users_interested(),
-		'all_users_interested': len(client.send(req)),
-		'title': slug.replace("-"," "),
-		'slug': slug,
-		'recommId': recommId,
-		'rating_stars': rating_stars,
-		'item_id': itemId
-	}
+        'item': item,
+        'is_interested': is_interested,
+        'all_users_interested': len(client.send(ListItemPurchases(itemId))),
+        'title': slug.replace("-", " "),
+        'slug': slug,
+        'recommId': recommId,
+        'rating_stars': rating_stars,
+        'itemId': itemId,
+    }
 	return render(request, 'recommend/item_detail.html', context)
 
 @login_required

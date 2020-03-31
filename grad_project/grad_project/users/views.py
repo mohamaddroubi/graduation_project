@@ -152,41 +152,37 @@ def profile(request):
 	#created = Profile.objects.get_or_create(user=request.user)
 	return render(request, 'users/profile.html', context)
 
-def interested(request, slug, recommId="none"):
-	user_id = str(User.objects.filter(username=request.user.username).first().id)
-	req = ListUserPurchases(user_id)
-	req.timeout = 100000
-	user_purchases = client.send(req)
-	itemId = request.POST.get('item_id')
-	#f = f"'itemId'==\"{itemId}\""
-	#item = client.send(ListItems(filter=f, return_properties=True))
-	#item = get_object_or_404(Item, id=request.POST.get('item_id'))
-	is_interested = False
-	found = False
+def interested(request, slug, recommId):
 
-	for item in user_purchases:
-		if itemId == item['itemId']:
-			found = True
-			break
-	if found:
-		req = DeletePurchase(user_id, itemId)
-		req.timeout = 10000
-		client.send(req)
-		is_interested = False
-			
-	else:
-		if(recommId != "none"):
-			req = AddPurchase(user_id, itemId, recomm_id=recommId)
-			req.timeout = 10000
-			client.send(req)
-		else:
-			req = AddPurchase(user_id, itemId)
-			req.timeout = 10000
-			client.send(req)
+    user_id = str(User.objects.filter(username=request.user.username).first().id)
+    itemId = request.POST.get('item_id')
+    # f = f"'itemId'==\"{itemId}\""
+    # item = client.send(ListItems(filter=f, return_properties=True))
+    # item = get_object_or_404(Item, id=request.POST.get('item_id'))
+    is_interested = False
+    user_purchases = client.send(ListUserPurchases(user_id))
+    for item in user_purchases:
+        if item['itemId'] == itemId:
+            is_interested = True
 
-		is_interested = True
+    if is_interested:
+        req = DeletePurchase(user_id, itemId)
+        req.timeout = 10000
+        client.send(req)
+        is_interested = False
 
-	return HttpResponseRedirect(reverse("item_detail", args=[itemId, slug, recommId]))
+    else:
+        if recommId != "none":
+            req = AddPurchase(user_id, itemId, recomm_id=recommId)
+            req.timeout = 10000
+            client.send(req)
+        else:
+            req = AddPurchase(user_id, itemId)
+            req.timeout = 10000
+            client.send(req)
+        is_interested = True
+
+    return redirect('item_detail', itemId=itemId, slug=slug, recommId=recommId)
 
 """
 
@@ -209,7 +205,7 @@ def rate(request, itemId, slug, recommId):
 	if rating > 0:
 		rating_recombee = (rating-3)/2
 		if recommId != "none":
-			client.send(AddRating(user_id, itemId, rating_recombee, recommId))
+			client.send(AddRating(user_id, itemId, rating_recombee,  recomm_id=recommId))
 		else: 
 			client.send(AddRating(user_id, itemId, rating_recombee))
 	elif rating == 0:
