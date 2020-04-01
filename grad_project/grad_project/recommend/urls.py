@@ -9,7 +9,6 @@ urlpatterns = [
     path('recommend/', views.recommend, name='recommend'),
     path('items/', views.items, name='items'),
     path('search/', views.search, name='search'),
-    path('search/results', views.search_result, name='search_results'),
     #path('login-successful/', views.home, name='login-successful'),
     #path('search/', SearchResults.as_view(), name='search_results')
 ]

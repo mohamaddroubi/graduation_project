@@ -91,7 +91,7 @@ def items(request):
 	}	
 	
 	return render(request, 'recommend/items.html', context)
-
+"""
 @login_required
 def search(request):
 	search_form = SearchForm(request.GET)
@@ -100,7 +100,7 @@ def search(request):
 	}
 
 	return render(request, 'recommend/search.html', context)
-
+"""
 """
 @login_required
 def home(request, default='Recommended'):
@@ -206,6 +206,13 @@ def item_detail(request, itemId, slug, recommId):
 	else:
 		rating_stars = 0
 
+	color = ""
+	
+	for c in item['Color']:
+		color = color + c.replace(" ", "") + ", "
+	
+	color = color[:-2]
+
 	context = {
         'item': item,
         'is_interested': is_interested,
@@ -215,43 +222,52 @@ def item_detail(request, itemId, slug, recommId):
         'recommId': recommId,
         'rating_stars': rating_stars,
         'itemId': itemId,
+		'color': color,
     }
 	return render(request, 'recommend/item_detail.html', context)
 
 @login_required
-def search_result(request):
-	user_id = str(User.objects.filter(username=request.user.username).first().id)
-	if(request.method == 'GET'):
+def search(request):
+    user_id = str(User.objects.filter(username=request.user.username).first().id)
+    if (request.method == 'GET'):
 
-		category = request.GET.get('byCat')
-		brand = request.GET.get('byBrand')
-		search_query = f"'Category'==\"{category}\" or 'Brand'==\"{brand}\"" 
-		items = client.send(ListItems(filter=search_query, return_properties=True, count=50))
+        category = request.GET.get('byCat')
+        brand = request.GET.get('byBrand')
+        search_query = request.GET.get('search')+" "+brand+" "+category
+        filter_query = f"'Category'==\"{category}\" or 'Brand'==\"{brand}\""
 
-		item_titles_items = []
-		for i in items:
-			item_titles_items.append(i['Description'].replace(".", ':').split(":")[0].upper())
 
-		slugs_items = []
-		for i in item_titles_items:
-			slugs_items.append(i.replace(" ", "-"))
+        result = client.send(SearchItems(user_id, search_query, count=50,
+         scenario="search", cascade_create=True, return_properties=True, filter=filter_query))
 
-		for i in range(len(items)):
-			items[i]['slug'] = slugs_items[i]
-			items[i]['title'] = item_titles_items[i]
+        items = result['recomms']
+        recommId = result['recommId']
 
-		paginator = Paginator(items, 10)
-		page = request.GET.get('page')
-		page_obj = paginator.get_page(page)
+        item_titles_items = []
+        for i in items:
+            item_titles_items.append(i['values']['Description'].replace(".", ':').split(":")[0].upper())
 
-		context = {
-		'items': items,
-		'page_obj': page_obj,
-		}
+        slugs_items = []
+        for i in item_titles_items:
+            slugs_items.append(i.replace(" ", "-"))
 
-		return render(request, 'recommend/search_results.html', context)
+        for i in range(len(items)):
+            items[i]['slug'] = slugs_items[i]
+            items[i]['title'] = item_titles_items[i]
 
-	return render(request, 'recommend/search_result.html')
+        paginator = Paginator(items, 10)
+        page = request.GET.get('page')
+        page_obj = paginator.get_page(page)
+
+        context = {
+            'items': items,
+            'page_obj': page_obj,
+            'recommId': recommId,
+        }
+
+        return render(request, 'recommend/search_results.html', context)
+
+    return render(request, 'recommend/search_result.html')
 
 """"
 class SearchResults(ListView):
@@ -272,20 +288,21 @@ class SearchResults(ListView):
 """
 
 def brands_list(request):
-	brands = sorted(Item.BRANDS_LIST)
-	paginator = Paginator(brands, 10)
+	#brands = sorted(Item.BRANDS_LIST)
+	brands_recombee = Item.BRANDS_2
+	paginator = Paginator(brands_recombee, 10)
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
 	context = {
 	'page_obj': page_obj,
-	'brands': brands
+	'brands': brands_recombee,
+	
 	}
 	return render(request, 'recommend/brands_list.html', context)
 
 def brand_items(request, brand): 
 	f = f"'Brand'==\"{brand}\""
 	items = client.send(ListItems(filter=f, return_properties=True))
-
 	item_titles_items = []
 	for i in items:
 		item_titles_items.append(i['Description'].replace(".", ':').split(":")[0].upper())

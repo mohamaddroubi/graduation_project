@@ -2,13 +2,12 @@
 {% block content %}
 <div class="content-section">
   {% if brand %}
-
-  <h1 class="display-4 mb-5">Items from {{ brand|title }} </h1>
+  <h1 class="justify-content-center display-4 mb-5">Items from {{ brand|title }} </h1>
     {% if request.user.is_authenticated %}
-    <form action="{% url 'brand_rate' brand %}" method="POST" class="mb-6">
+    <form action="{% url 'brand_rate' brand %}" method="POST" class="justify-content-center mb-6">
       {% csrf_token %}
       <fieldset>
-        <span class="form-check form-check-inline">
+        <span class="form-check form-check-inline mb-5 ">
 
           <input class="form-check-input mr-2 ml-2" type="radio" id="id_rating_1" name="rating" value="1" />
           <label class="form-check-label" for="id_rating_1">Very Bad</label>

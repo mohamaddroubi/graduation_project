@@ -34,30 +34,57 @@ class Item(models.Model):
 		'Nike'
 		]
 
+	#for recombee users
 	BRANDS = (
-		('Zara', 'Zara'),
-		('Gap', 'Gap'),
-		("Levi Strauss & Co. (Levi's)", "Levi Strauss & Co. (Levi's)"),
-		('Mango', 'Mango'),
-		('Monsoon', 'Monsoon'),
-		('Pull & Bear', 'Pull & Bear'),
-		('Bershka', 'Bershka'),
-		('American Eagle (AE)', 'American Eagle (AE)'),
-		('Forever 21', 'Forever 21'),
-		('Stradivarious', 'Stradivarious'),
-		('Parfois', 'Parfois'),
-		('British Home Stores (BHS)', 'British Home Stores (BHS)'),
-		('United States Polo Assn.', 'United States Polo Assn.'),
-		('Adidas', 'Adidas'),
-		('Tommy Hilfiger', 'Tommy Hilfiger'),
-		('BOGGI', 'BOGGI'),
-		('HACKETT', 'HACKETT'),
-		('Massimo Dutti', 'Massimo Dutti'),
-		('Punt Roma', 'Punt Roma'),
-		('H&M', 'H&M'),
-		('next', 'Next'),
-		('Nike', 'Nike')
-		)
+        ('Zara', 'Zara'),
+        ('Gap', 'Gap'),
+        ("Levis", "Levi Strauss & Co. (Levi's)"),
+        ('Mango', 'Mango'),
+        ('Monsoon', 'Monsoon'),
+        ('PullBear', 'Pull & Bear'),
+        ('Bershka', 'Bershka'),
+        ('AmericanEagle', 'American Eagle (AE)'),
+        ('Forever21', 'Forever 21'),
+        ('Stradivarious', 'Stradivarious'),
+        ('Parfois', 'Parfois'),
+        ('BHS', 'British Home Stores (BHS)'),
+        ('USPA', 'United States Polo Assn.'),
+        ('Adidas', 'Adidas'),
+        ('TommyHilfiger', 'Tommy Hilfiger'),
+        ('Boggi', 'BOGGI'),
+        ('Hackett', 'HACKETT'),
+        ('MassimoDutti', 'Massimo Dutti'),
+        ('PuntRoma', 'Punt Roma'),
+        ('HM', 'H&M'),
+        ('next', 'Next'),
+        ('Nike', 'Nike')
+    )
+
+	#for recombee items
+	BRANDS_2 = (
+        ('Zara', 'Zara'),
+        ('Gap', 'Gap'),
+        ("Levi's", "Levi Strauss & Co. (Levi's)"),
+        ('Mango', 'Mango'),
+        ('Monsoon', 'Monsoon'),
+        ('Pull & Bear', 'Pull & Bear'),
+        ('Bershka', 'Bershka'),
+        ('AE', 'American Eagle (AE)'),
+        ('Forever21', 'Forever 21'),
+        ('Stradivarious', 'Stradivarious'),
+        ('Parfois', 'Parfois'),
+        ('BHS', 'British Home Stores (BHS)'),
+        ('USPA', 'United States Polo Assn.'),
+        ('Adidas', 'Adidas'),
+        ('Tommy Hilfiger', 'Tommy Hilfiger'),
+        ('Boggi', 'BOGGI'),
+        ('Hackett', 'HACKETT'),
+        ('MassimoDutti', 'Massimo Dutti'),
+        ('Puntroma', 'Punt Roma'),
+        ('HM', 'H&M'),
+        ('next', 'Next'),
+        ('Nike', 'Nike')
+    )
 
 	OCASSIONS = (
 		('Formal', 'Formal'),

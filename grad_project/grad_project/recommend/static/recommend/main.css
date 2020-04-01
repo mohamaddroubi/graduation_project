@@ -16,12 +16,18 @@ ul {
   margin: 0;
 }
 
+a {
+  color: green;
+  text-decoration: none;
+}
+
 .container{
   min-height: 100%;
 }
 
 .bg-steel {
-  background-color: #5f788a;
+  background-color: #D4EDDA;
+  /*background-color: #5f788a;*/
 }
 
 .site-header .navbar-nav .nav-link {
@@ -141,8 +147,9 @@ a.article-title:hover {
   list-style: none;
 }
 
-.footer .footer-content .footer-section .links ul a {
-  color:rgb(14, 90, 27);
+
+.footer a {
+  color: #67eb81;
   text-decoration: none;
 }
 

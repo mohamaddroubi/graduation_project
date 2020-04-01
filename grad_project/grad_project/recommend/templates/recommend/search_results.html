@@ -1,18 +1,18 @@
 {% extends "recommend/base.html" %}
 {% block content %}
   <div class="content-section">
-    <h3>Items</h3>
-      <p>Search results: </p>
+    <h3>Search Results</h3>
+      <p></p>
       <div class="card-columns">
       {% if items %}
       {% for item in page_obj %}
         <div class="card" >
-          <img class="card-img-top" src="{{ item.Picture }}" alt="image of {{ item.title }}" >
+          <img class="card-img-top" src="{{ item.value.Picture }}" alt="image of {{ item.title }}" >
           <div class="card-body">
             <h5 class="card-title">{{ item.title }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">from {{ item.Brand }}</h6>
-            <p class="card-text">{{ item.Description }}</p>
-            <a href="{% url 'item_detail' item.itemId item.slug 'none' %}" class="btn btn-primary stretched-link">More Details</a>
+            <h6 class="card-subtitle mb-2 text-muted">from {{ item.values.Brand }}</h6>
+            <p class="card-text">{{ item.values.Description }}</p>
+            <a href="{% url 'item_detail' item.id item.slug recommId %}" class="btn btn-primary stretched-link">More Details</a>
           </div>
         </div>
         {% empty %}
