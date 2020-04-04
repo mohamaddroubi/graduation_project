@@ -7,6 +7,10 @@ from recommend.models import Item
 from django.contrib import admin
 
 
+def validate_brands(value):
+		if len(value)>3:
+			raise forms.ValidationError('Select upto 3 brands only')
+
 class UserRegisterForm(UserCreationForm):
 
 	username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username'}))
@@ -30,7 +34,8 @@ class UserProfileForm(forms.ModelForm):
 		widget=forms.RadioSelect())
 	user_brands = forms.MultipleChoiceField(label="Choose your most favorite brands", 
 		widget=forms.CheckboxSelectMultiple(),
-		choices=Item.BRANDS,
+		choices=Item.BRANDS_2,
+		validators=[validate_brands]
 		)
 
 	class Meta:
@@ -64,10 +69,13 @@ class ProfileUpdateForm(forms.ModelForm):
 	#	widget=forms.RadioSelect())
 	user_brands = forms.MultipleChoiceField(label="Choose your most favorite brands", 
 		widget=forms.CheckboxSelectMultiple(),
-		choices=Item.BRANDS,
+		choices=Item.BRANDS_2,
+		validators=[validate_brands]
 		)
+		
 
 	class Meta:
 		model = Profile
 		fields = ['phone', 'birthday', 'gender', 'user_style', 'user_brands']
+
 

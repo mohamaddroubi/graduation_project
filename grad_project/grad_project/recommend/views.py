@@ -232,10 +232,14 @@ def search(request):
     if (request.method == 'GET'):
 
         category = request.GET.get('byCat')
-        brand = request.GET.get('byBrand')
-        search_query = request.GET.get('search')+" "+brand+" "+category
-        filter_query = f"'Category'==\"{category}\" or 'Brand'==\"{brand}\""
 
+        brand = request.GET.get('byBrand')
+
+        occasion = request.GET.get('occasion')
+
+        filter_query = f"'Category'==\"{category}\" or 'Brand'==\"{brand}\" or 'Occasion'==\"{occasion}\""
+
+        search_query = request.GET.get('search')+" "+brand+" "+category+" "+occasion
 
         result = client.send(SearchItems(user_id, search_query, count=50,
          scenario="search", cascade_create=True, return_properties=True, filter=filter_query))
@@ -319,10 +323,17 @@ def brand_items(request, brand):
 	page = request.GET.get('page', 1)
 	page_items = paginator.get_page(page)
 
+	brand_title = brand
+	for i in Item.BRANDS_2:
+		if brand == i[0]:
+			brand_title = i[1]
+			break
+
 	context = {
 		'page_items': page_items,
 		'items': items,
-		'brand': brand
+		'brand': brand,
+		'brand_title': brand_title,
 	}	
 	
 	return render(request, 'recommend/items.html', context)

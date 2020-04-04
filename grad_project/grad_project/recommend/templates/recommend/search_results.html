@@ -7,7 +7,7 @@
       {% if items %}
       {% for item in page_obj %}
         <div class="card" >
-          <img class="card-img-top" src="{{ item.value.Picture }}" alt="image of {{ item.title }}" >
+          <img class="card-img-top" src="{{ item.values.Picture }}" alt="image of {{ item.title }}" >
           <div class="card-body">
             <h5 class="card-title">{{ item.title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">from {{ item.values.Brand }}</h6>

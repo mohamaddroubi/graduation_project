@@ -56,6 +56,17 @@
     <main role="main" class="container">
       {% if user.is_authenticated %}
       <form action="{% url 'search' %}" method="GET" class="justify-content-center form-inline">
+
+        <select name="occasion" placeholder="Occasion" class="custom-select form-control mb-4 mr-sm-2" id="id_Occasion">
+          <option value="" selected="">Occasion</option>
+
+          <option value="Casual">Casual</option>
+
+          <option value="Semi-Formal">Semi-Formal</option>
+
+          <option value="Formal">Formal</option>
+
+        </select>
           
         <select name="byBrand" placeholder="Brand" class="custom-select form-control mb-4 mr-sm-2" id="id_byBrand">
             <option value="" selected="">Brand</option>

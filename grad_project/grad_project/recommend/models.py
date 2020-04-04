@@ -34,33 +34,33 @@ class Item(models.Model):
 		'Nike'
 		]
 
-	#for recombee users
+	#for recombee users, used for when a user rates a brand, they ahave to be the exact names as in users recombee
 	BRANDS = (
 		('Zara', 'Zara'),
 		('Gap', 'Gap'),
-		("Levi's", "Levi's"),
+		("Levis", "Levi's"),
 		('Mango', 'Mango'),
 		('Monsoon', 'Monsoon'),
-		('Pull & Bear', 'Pull & Bear'),
+		('PullBear', 'Pull & Bear'),
 		('Bershka', 'Bershka'),
-		('AE', 'American Eagle (AE)'),
-		('Forever 21', 'Forever 21'),
+		('AmericanEagle', 'American Eagle (AE)'),
+		('Forever21', 'Forever 21'),
 		('Stradivarious', 'Stradivarious'),
 		('Parfois', 'Parfois'),
 		('BHS', 'British Home Stores (BHS)'),
 		('USPA', 'United States Polo Assn.'),
 		('Adidas', 'Adidas'),
-		('Tommy Hilfiger', 'Tommy Hilfiger'),
-		('BOGGI', 'BOGGI'),
-		('HACKETT', 'HACKETT'),
-		('Massimo Dutti', 'Massimo Dutti'),
-		('Punt Roma', 'Punt Roma'),
-		('H&M', 'H&M'),
+		('TommyHilfiger', 'Tommy Hilfiger'),
+		('Boggi', 'BOGGI'),
+		('Hackett', 'HACKETT'),
+		('MassimoDutti', 'Massimo Dutti'),
+		('PuntRoma', 'Punt Roma'),
+		('HM', 'H&M'),
 		('next', 'Next'),
 		('Nike', 'Nike')
 	)
 
-	#for recombee items
+	#for recombee items, have to be the exact names as in recombee items, for filtering
 	BRANDS_2 = (
         ('Zara', 'Zara'),
         ('Gap', 'Gap'),

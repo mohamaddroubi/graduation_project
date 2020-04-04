@@ -145,11 +145,14 @@ def profile(request):
 		items[i]['title'] = item_titles[i]
 
 	
-	brands = request.user.profile.user_brands.replace("]", "").replace("[", "").replace("\'", "").replace('\"',"").replace(" ","").split(",")
-	
+	brands = request.user.profile.user_brands.replace("]", "").replace("[", "").replace("\'","").replace('\"',"").split(",")
+	#print(brands)#debugging
+	for i in range(len(brands)):
+		brands[i] = brands[i].rstrip().lstrip()
+	#print(brands)#debugging
 	brands_list = []
-	for i in  Item.BRANDS:
-		if i[0] in brands:
+	for i in  Item.BRANDS_2:
+		if i[0].replace("\'","") in brands:
 			brands_list.append(i[1])
 
 	
@@ -157,6 +160,7 @@ def profile(request):
 		'items': items,
 		'brands': brands_list
 	}
+	#print(brands_list)#debugging
 	#created = Profile.objects.get_or_create(user=request.user)
 	return render(request, 'users/profile.html', context)
 
