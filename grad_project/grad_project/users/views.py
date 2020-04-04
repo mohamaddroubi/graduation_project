@@ -225,6 +225,18 @@ def brand_rate(request, brand):
 
 	user_id = str(User.objects.filter(username=request.user.username).first().id)
 	rating = int(request.POST.get('rating'))
+	temp_brand = brand
+
+	if brand == "Levi's":
+		brand = "Levis"
+	elif brand == "Pull & Bear":
+		brand = "PullBear"
+	elif brand == "AE":
+		brand = "AmericanEagle"
+	elif brand == "Tommy Hilfiger":
+		brand = "TommyHilfiger"
+	elif brand == "Puntroma":
+		brand = "PuntRoma"
 	
 	values = {
 		brand: rating
@@ -232,4 +244,4 @@ def brand_rate(request, brand):
 
 	client.send(SetUserValues(user_id, values))
 
-	return HttpResponseRedirect(reverse("brand_items", args=[brand]))
+	return HttpResponseRedirect(reverse("brand_items", args=[temp_brand]))

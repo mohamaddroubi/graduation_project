@@ -64,25 +64,25 @@ class Item(models.Model):
 	BRANDS_2 = (
         ('Zara', 'Zara'),
         ('Gap', 'Gap'),
-        ("Levi's", "Levi Strauss & Co. (Levi's)"),
+        ("Levi's", "Levi Strauss & Co. (Levi's)"),#differrent
         ('Mango', 'Mango'),
         ('Monsoon', 'Monsoon'),
-        ('Pull & Bear', 'Pull & Bear'),
+        ('Pull & Bear', 'Pull & Bear'),#different
         ('Bershka', 'Bershka'),
-        ('AE', 'American Eagle (AE)'),
-        ('Forever21', 'Forever 21'),
+        ('AE', 'American Eagle (AE)'),#different
+        ('Forever21', 'Forever 21'), 
         ('Stradivarious', 'Stradivarious'),
         ('Parfois', 'Parfois'),
         ('BHS', 'British Home Stores (BHS)'),
         ('USPA', 'United States Polo Assn.'),
         ('Adidas', 'Adidas'),
-        ('Tommy Hilfiger', 'Tommy Hilfiger'),
+        ('Tommy Hilfiger', 'Tommy Hilfiger'),#different
         ('Boggi', 'BOGGI'),
         ('Hackett', 'HACKETT'),
         ('MassimoDutti', 'Massimo Dutti'),
-        ('Puntroma', 'Punt Roma'),
+        ('Puntroma', 'Punt Roma'),#different
         ('HM', 'H&M'),
-        ('next', 'Next'),
+        ('next', 'Next'),#no items from next
         ('Nike', 'Nike')
     )
 
