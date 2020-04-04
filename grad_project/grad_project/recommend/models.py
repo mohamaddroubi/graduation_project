@@ -12,17 +12,17 @@ class Item(models.Model):
 	BRANDS_LIST = [
 		'Zara',
 		'Gap',
-		"Levi Strauss & Co. (Levi's)",
+		"Levi's",
 		'Mango',
 		'Monsoon',
 		'Pull & Bear',
 		'Bershka',
-		'American Eagle (AE)',
+		'AE',
 		'Forever 21',
 		'Stradivarious',
 		'Parfois',
-		'British Home Stores (BHS)',
-		'United States Polo Assn.',
+		'BHS',
+		'USPA',
 		'Adidas',
 		'Tommy Hilfiger',
 		'BOGGI',
@@ -37,17 +37,17 @@ class Item(models.Model):
 	BRANDS = (
 		('Zara', 'Zara'),
 		('Gap', 'Gap'),
-		("Levi Strauss & Co. (Levi's)", "Levi Strauss & Co. (Levi's)"),
+		("Levi's", "Levi's"),
 		('Mango', 'Mango'),
 		('Monsoon', 'Monsoon'),
 		('Pull & Bear', 'Pull & Bear'),
 		('Bershka', 'Bershka'),
-		('American Eagle (AE)', 'American Eagle (AE)'),
+		('AE', 'American Eagle (AE)'),
 		('Forever 21', 'Forever 21'),
 		('Stradivarious', 'Stradivarious'),
 		('Parfois', 'Parfois'),
-		('British Home Stores (BHS)', 'British Home Stores (BHS)'),
-		('United States Polo Assn.', 'United States Polo Assn.'),
+		('BHS', 'British Home Stores (BHS)'),
+		('USPA', 'United States Polo Assn.'),
 		('Adidas', 'Adidas'),
 		('Tommy Hilfiger', 'Tommy Hilfiger'),
 		('BOGGI', 'BOGGI'),
@@ -57,7 +57,7 @@ class Item(models.Model):
 		('H&M', 'H&M'),
 		('next', 'Next'),
 		('Nike', 'Nike')
-		)
+		)	
 
 	OCASSIONS = (
 		('Formal', 'Formal'),
