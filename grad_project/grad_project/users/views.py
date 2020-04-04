@@ -144,10 +144,18 @@ def profile(request):
 		items[i]['slug'] = slugs_items[i]
 		items[i]['title'] = item_titles[i]
 
-	brands = request.user.profile.user_brands.replace("]","").replace("[","").replace("\'","").replace('\"',"").split(",")
+	
+	brands = request.user.profile.user_brands.replace("]", "").replace("[", "").replace("\'", "").replace('\"',"").replace(" ","").split(",")
+	
+	brands_list = []
+	for i in  Item.BRANDS:
+		if i[0] in brands:
+			brands_list.append(i[1])
+
+	
 	context = {
 		'items': items,
-		'brands': brands
+		'brands': brands_list
 	}
 	#created = Profile.objects.get_or_create(user=request.user)
 	return render(request, 'users/profile.html', context)
@@ -217,6 +225,18 @@ def brand_rate(request, brand):
 
 	user_id = str(User.objects.filter(username=request.user.username).first().id)
 	rating = int(request.POST.get('rating'))
+	temp_brand = brand
+
+	if brand == "Levi's":
+		brand = "Levis"
+	elif brand == "Pull & Bear":
+		brand = "PullBear"
+	elif brand == "AE":
+		brand = "AmericanEagle"
+	elif brand == "Tommy Hilfiger":
+		brand = "TommyHilfiger"
+	elif brand == "Puntroma":
+		brand = "PuntRoma"
 	
 	values = {
 		brand: rating
@@ -224,4 +244,4 @@ def brand_rate(request, brand):
 
 	client.send(SetUserValues(user_id, values))
 
-	return HttpResponseRedirect(reverse("brand_items", args=[brand]))
+	return HttpResponseRedirect(reverse("brand_items", args=[temp_brand]))

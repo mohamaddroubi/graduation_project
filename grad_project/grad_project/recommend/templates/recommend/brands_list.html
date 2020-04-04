@@ -4,7 +4,7 @@
   <h1 class="display-4 mb-5">Our list of brands</h1>
     <div class="list-group mb-5">
       {% for brand in page_obj %}
-      <a href="{% url 'brand_items' brand %}" class=list-group-item>{{ brand|title }}</a>
+      <a href="{% url 'brand_items' brand.0 %}" class=list-group-item>{{ brand.1|title }}</a>
       {% endfor %}
     </div>
     <!-- Pagination here -->

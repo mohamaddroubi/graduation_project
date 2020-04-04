@@ -21,10 +21,12 @@
     {% else %}
         <title>CLOTHiS</title>
     {% endif %}
+
+ 
 </head>
 <body>
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top" style="background-color: #5f788a;">
         <div class="container">
           <a class="navbar-brand mr-4" href="{% url 'about' %}">CLOTHiS</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +36,7 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'recommend' %}">Recommend for me!</a>
               <a class="nav-item nav-link" href="{% url 'items' %}">Items</a>
-              <a class="nav-item nav-link" href="{% url 'search' %}">Find</a>
+             <!-- <a class="nav-item nav-link" href="{% url 'search' %}">Find</a>-->
               <a class="nav-item nav-link" href="#">Contact us</a>
             </div>
             <!-- Navbar Right Side -->
@@ -52,6 +54,73 @@
       </nav>
     </header>
     <main role="main" class="container">
+      {% if user.is_authenticated %}
+      <form action="{% url 'search' %}" method="GET" class="justify-content-center form-inline">
+          
+        <select name="byBrand" placeholder="Brand" class="custom-select form-control mb-4 mr-sm-2" id="id_byBrand">
+            <option value="" selected="">Brand</option>
+
+            <option value="Zara">Zara</option>
+
+            <option value="Gap">Gap</option>
+
+            <option value="Levis">Levi Strauss &amp; Co. (Levi's)</option>
+
+            <option value="Mango">Mango</option>
+
+            <option value="Monsoon">Monsoon</option>
+
+            <option value="PullBear">Pull &amp; Bear</option>
+
+            <option value="Bershka">Bershka</option>
+
+            <option value="AmericanEagle">American Eagle (AE)</option>
+
+            <option value="Forever21">Forever 21</option>
+
+            <option value="Stradivarious">Stradivarious</option>
+
+            <option value="Parfois">Parfois</option>
+
+            <option value="BHS">British Home Stores (BHS)</option>
+
+            <option value="USPA">United States Polo Assn.</option>
+
+            <option value="Adidas">Adidas</option>
+
+            <option value="TommyHilfiger">Tommy Hilfiger</option>
+
+            <option value="Boggi">BOGGI</option>
+
+            <option value="Hackett">HACKETT</option>
+
+            <option value="MassimoDutti">Massimo Dutti</option>
+
+            <option value="PuntRoma">Punt Roma</option>
+
+            <option value="HM">H&amp;M</option>
+
+            <option value="next">Next</option>
+
+            <option value="Nike">Nike</option>
+          </select>
+
+          <select name="byCat" placeholder="Category" class="custom-select form-control mb-4 mr-sm-2" id="id_byCat">
+            <option value="" selected="">Category</option>
+
+            <option value="Top">Top</option>
+
+            <option value="Bottom">Bottom</option>
+
+            <option value="FullBody">Full Body</option>
+
+            <option value="Shoes">Shoes</option>
+
+          </select>
+        <input type="search" name="search" placeholder="Search" class="form-control mb-4 ml-sm-2" maxlength="100" id="id_search">
+        <button class="btn btn-outline-success mb-4 ml-sm-2" type="submit" style="cursor: pointer;">Search</button>
+      </form>
+      {% endif %}
       <div class="row">
         <div class="col">
           {% if messages %}
