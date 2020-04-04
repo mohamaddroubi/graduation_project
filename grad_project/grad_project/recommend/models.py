@@ -36,7 +36,6 @@ class Item(models.Model):
 
 	#for recombee users
 	BRANDS = (
-<<<<<<< HEAD
 		('Zara', 'Zara'),
 		('Gap', 'Gap'),
 		("Levi's", "Levi's"),
@@ -59,31 +58,7 @@ class Item(models.Model):
 		('H&M', 'H&M'),
 		('next', 'Next'),
 		('Nike', 'Nike')
-		)	
-=======
-        ('Zara', 'Zara'),
-        ('Gap', 'Gap'),
-        ("Levis", "Levi Strauss & Co. (Levi's)"),
-        ('Mango', 'Mango'),
-        ('Monsoon', 'Monsoon'),
-        ('PullBear', 'Pull & Bear'),
-        ('Bershka', 'Bershka'),
-        ('AmericanEagle', 'American Eagle (AE)'),
-        ('Forever21', 'Forever 21'),
-        ('Stradivarious', 'Stradivarious'),
-        ('Parfois', 'Parfois'),
-        ('BHS', 'British Home Stores (BHS)'),
-        ('USPA', 'United States Polo Assn.'),
-        ('Adidas', 'Adidas'),
-        ('TommyHilfiger', 'Tommy Hilfiger'),
-        ('Boggi', 'BOGGI'),
-        ('Hackett', 'HACKETT'),
-        ('MassimoDutti', 'Massimo Dutti'),
-        ('PuntRoma', 'Punt Roma'),
-        ('HM', 'H&M'),
-        ('next', 'Next'),
-        ('Nike', 'Nike')
-    )
+	)
 
 	#for recombee items
 	BRANDS_2 = (
@@ -110,7 +85,6 @@ class Item(models.Model):
         ('next', 'Next'),#no items from next
         ('Nike', 'Nike')
     )
->>>>>>> 862066e1d2b68de772d91d22ed3b6eba62e230fd
 
 	OCASSIONS = (
 		('Formal', 'Formal'),
