@@ -4,6 +4,7 @@
 
 {% endblock head %}
 {% block content %}
+<h1 class="display-4 mb-5 mt-5">{{ title }} </h1>
     <div class="content-section">
       <img src="{{ item.Picture }}" class="img-fluid" alt>
       <p class="text-center h6" style="margin: 10px">{{ all_users_interested }} user{{ all_users_interested|pluralize }} interested in this item</p>
@@ -53,7 +54,7 @@
       
       <!-- FORM HERE -->
       {% if request.user.is_authenticated %}
-          <form action="{% url 'interested' slug recommId %}" method="POST">
+          <form action="{% url 'interested' slug recommId %}" method="POST" style="margin: 10px;" class="justify-content-center form-inline">
             {% csrf_token %}
             {% if is_interested %}
               <button type="submit" name="item_id" value="{{ itemId }}" class="btn btn-danger">Not Interested</button>
@@ -62,7 +63,7 @@
             {% endif %}
           </form>
       
-          <form action="{% url 'rate' item.itemId slug recommId %}" method="POST">
+          <form action="{% url 'rate' item.itemId slug recommId %}" method="POST" style="margin: 10px;" class="justify-content-center form-inline">
             {% csrf_token %}
             <fieldset>
               <span class="form-check form-check-inline">
@@ -82,14 +83,32 @@
                 <input class="form-check-input ml-2 mr-2" type="radio" id="id_rating_5" name="rating" value="5" />
                 <label class="form-check-label" for="id_rating_5">Very Good</label>
 
+                <button class="btn btn-primary ml-5" type="submit">Rate Item</button>
               </span>
-              <button class="btn btn-primary ml-5" type="submit">Rate Item</button>
+              
             </fieldset>            
           </form>
         
         {% endif %}
-
     </div>
+    
+    <section>
+      <h1 class="display-4 mb-5 mt-5">You may also like: </h1>
+      <div class="content-section">
+            <div class="card-columns">
+            {% for item in related_items %}
+              <div class="card" >
+                <img class="card-img-top" src="{{ item.values.Picture }}" alt="image of {{ item.title }}" >
+                <div class="card-body">
+                  <h5 class="card-title">{{ item.title }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">from {{ item.values.Brand }}</h6>
+                  <p class="card-text">{{ item.values.Description }}</p>
+                  <a href="{% url 'item_detail' item.id item.slug rel_items_rec_id %}" class="btn btn-primary stretched-link">More Details</a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+    </section>
 {% endblock content %}
 {% block script %}
  
