@@ -191,7 +191,7 @@ def search(request):
 
         url = f"?occasion={occasion}&byBrand={brand}&byCat={category}&search={search}"
 
-        filter_query = f"'Category'==\"{category}\" or 'Brand'==\"{brand}\" or 'Occasion'==\"{occasion}\""
+        
 
         search_query = ""
         if not(search==""):
@@ -204,7 +204,7 @@ def search(request):
             search_query += " "+occasion
         
         result = client.send(SearchItems(user_id, search_query, count=50,
-         scenario="search", cascade_create=True, return_properties=True, filter=filter_query))
+         scenario="search", cascade_create=True, return_properties=True, ))
 
         items = result['recomms']
         recommId = result['recommId']
@@ -240,23 +240,6 @@ def search(request):
 
     return render(request, 'recommend/search_result.html')
 
-""""
-class SearchResults(ListView):
-	paginate_by = 5
-	model = Item
-	template_name = 'recommend/search_results.html'
-
-	def get_queryset(self):
-		if self.request.method == 'GET' and 'byCat' in self.request.GET and 'byBrand' in self.request.GET:
-			category = self.request.GET.get('byCat')
-			brand = self.request.GET.get('byBrand')
-			item_list = Item.objects.filter(
-				Q(category=category)|Q(brand=brand)
-				)
-			return item_list
-		else:
-			return ['wrong get request']
-"""
 
 def brands_list(request):
 	#brands = sorted(Item.BRANDS_LIST)
